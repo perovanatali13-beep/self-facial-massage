@@ -18,6 +18,7 @@ export async function POST(req: Request) {
       category: body.category || "",
       description: body.description || "",
       videoUrl: body.videoUrl || "",
+      videoFile: body.videoFile || "",
       content: body.content || "",
       published: Boolean(body.published),
       date: body.date || new Date().toISOString().slice(0, 10),

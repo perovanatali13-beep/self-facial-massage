@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCourse, getContent } from "@/lib/data";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
+import LessonVideo from "./LessonVideo";
 
 export const dynamic = "force-dynamic";
 
@@ -44,7 +45,11 @@ export default async function LessonPage({
           {lesson.title}
         </h1>
 
-        {lesson.videoUrl ? (
+        {lesson.videoFile ? (
+          <div className="mt-8 aspect-video overflow-hidden rounded-soft bg-black">
+            <LessonVideo src={`/api/video/${lesson.id}`} />
+          </div>
+        ) : lesson.videoUrl ? (
           <div className="mt-8 aspect-video overflow-hidden rounded-soft bg-black">
             <iframe
               src={lesson.videoUrl}

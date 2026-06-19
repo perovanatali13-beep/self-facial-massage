@@ -38,6 +38,8 @@ export interface Lesson {
   category: string;
   description: string;
   videoUrl: string;
+  /** Приватный URL видеофайла в Vercel Blob (отдаётся через прокси /api/video/<id>). */
+  videoFile: string;
   content: string;
   published: boolean;
   date: string;

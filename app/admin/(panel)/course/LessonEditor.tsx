@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { upload } from "@vercel/blob/client";
 import type { Lesson } from "@/lib/types";
 
 export default function LessonEditor({ lesson }: { lesson: Lesson }) {
@@ -9,6 +10,46 @@ export default function LessonEditor({ lesson }: { lesson: Lesson }) {
   const editorRef = useRef<HTMLDivElement>(null);
   const [form, setForm] = useState(lesson);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  async function uploadVideo(file: File) {
+    setUploading(true);
+    setProgress(0);
+    try {
+      const oldUrl = form.videoFile;
+      const ext = file.name.split(".").pop()?.toLowerCase() || "mp4";
+      const blob = await upload(`lessons/${form.id}-${Date.now()}.${ext}`, file, {
+        access: "private",
+        handleUploadUrl: "/api/admin/blob-upload",
+        onUploadProgress: (e) => setProgress(Math.round(e.percentage)),
+      });
+      setForm((f) => ({ ...f, videoFile: blob.url }));
+      if (oldUrl) {
+        await fetch("/api/admin/video", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: oldUrl }),
+        });
+      }
+    } catch (err) {
+      alert("Не удалось загрузить видео: " + (err as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function removeVideo() {
+    if (!form.videoFile) return;
+    if (!confirm("Удалить видео урока?")) return;
+    const url = form.videoFile;
+    setForm((f) => ({ ...f, videoFile: "" }));
+    await fetch("/api/admin/video", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url }),
+    });
+  }
 
   function cmd(command: string, value?: string) {
     document.execCommand(command, false, value);
@@ -118,7 +159,59 @@ export default function LessonEditor({ lesson }: { lesson: Lesson }) {
 
         <div>
           <label className="mb-1 block text-sm font-medium text-slate-600">
-            Ссылка на видео (embed URL)
+            Видео урока (файл)
+          </label>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="mb-3 text-sm">
+              {form.videoFile ? (
+                <span className="font-medium text-teal-dark">✓ Видео загружено</span>
+              ) : (
+                <span className="text-slate-500">Видео не загружено</span>
+              )}
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <label
+                className={`cursor-pointer rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 ${
+                  uploading ? "pointer-events-none opacity-60" : ""
+                }`}
+              >
+                {uploading
+                  ? `Загрузка… ${progress}%`
+                  : form.videoFile
+                    ? "Заменить видео"
+                    : "Загрузить видео"}
+                <input
+                  type="file"
+                  accept="video/*"
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) uploadVideo(file);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              {form.videoFile && !uploading && (
+                <button
+                  type="button"
+                  onClick={removeVideo}
+                  className="text-sm text-slate-400 hover:text-red-500"
+                >
+                  Удалить видео
+                </button>
+              )}
+            </div>
+            <p className="mt-2 text-xs text-slate-400">
+              Файл загружается в защищённое хранилище и недоступен для скачивания.
+              Изменения вступят в силу после сохранения урока.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium text-slate-600">
+            Или ссылка на внешнее видео (embed URL)
           </label>
           <input
             value={form.videoUrl}

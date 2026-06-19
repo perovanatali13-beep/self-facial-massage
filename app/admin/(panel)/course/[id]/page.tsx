@@ -24,6 +24,7 @@ export default async function EditLessonPage({
       category: "",
       description: "",
       videoUrl: "",
+      videoFile: "",
       content: "",
       published: false,
       date: new Date().toISOString().slice(0, 10),
