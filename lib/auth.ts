@@ -15,11 +15,10 @@ function token(): string {
     .digest("hex");
 }
 
+// Общий токен «доступ к курсу открыт». Код (общий пароль или персональный код
+// после оплаты) проверяется в момент входа; cookie далее просто подтверждает доступ.
 function courseToken(): string {
-  return crypto
-    .createHmac("sha256", SECRET)
-    .update(`course:${COURSE_PASSWORD}`)
-    .digest("hex");
+  return crypto.createHmac("sha256", SECRET).update("course:access:v1").digest("hex");
 }
 
 export function checkCredentials(login: string, password: string): boolean {

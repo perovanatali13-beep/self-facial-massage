@@ -6,34 +6,30 @@ export default function BuyForm({ ctaText }: { ctaText: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
 
+  const [message, setMessage] = useState("");
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("loading");
+    setMessage("");
     try {
-      const res = await fetch("/api/leads", {
+      const res = await fetch("/api/pay/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error();
-      setStatus("done");
-      setForm({ name: "", email: "", phone: "" });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.paymentUrl) {
+        // переход на страницу оплаты Т-Банк
+        window.location.href = data.paymentUrl;
+        return;
+      }
+      setStatus("error");
+      setMessage(data.error || "Не удалось перейти к оплате.");
     } catch {
       setStatus("error");
+      setMessage("Что-то пошло не так. Попробуйте ещё раз.");
     }
-  }
-
-  if (status === "done") {
-    return (
-      <div className="rounded-soft bg-teal-light/60 p-6 text-center">
-        <p className="font-display text-lg font-semibold text-teal-dark">
-          Спасибо! Заявка принята ✓
-        </p>
-        <p className="mt-2 text-sm text-mocha">
-          Мы свяжемся с вами и пришлём доступ к курсу.
-        </p>
-      </div>
-    );
   }
 
   return (
@@ -65,13 +61,14 @@ export default function BuyForm({ ctaText }: { ctaText: string }) {
         disabled={status === "loading"}
         className="w-full rounded-full bg-terracotta px-6 py-3 font-medium text-white transition hover:bg-clay disabled:opacity-60"
       >
-        {status === "loading" ? "Отправляем…" : ctaText}
+        {status === "loading" ? "Переходим к оплате…" : ctaText}
       </button>
       {status === "error" && (
-        <p className="text-center text-sm text-red-500">
-          Что-то пошло не так. Попробуйте ещё раз.
-        </p>
+        <p className="text-center text-sm text-red-500">{message}</p>
       )}
+      <p className="text-center text-xs text-mocha">
+        После оплаты вы сразу получите код доступа к курсу — на экране и на email.
+      </p>
     </form>
   );
 }
