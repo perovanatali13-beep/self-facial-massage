@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getCourse, getContent } from "@/lib/data";
+import { hasCourseAccess } from "@/lib/auth";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import LessonVideo from "./LessonVideo";
@@ -13,6 +14,7 @@ export default async function LessonPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  if (!(await hasCourseAccess())) redirect("/course/access");
   const course = await getCourse();
   const content = await getContent();
   const lesson = course.lessons.find((l) => l.id === id && l.published);

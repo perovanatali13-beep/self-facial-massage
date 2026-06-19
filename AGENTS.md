@@ -94,6 +94,7 @@ ADMIN_LOGIN=admin
 ADMIN_PASSWORD=...
 AUTH_SECRET=<длинная случайная строка>
 BLOB_READ_WRITE_TOKEN=...   # токен приватного Vercel Blob-стора (видео уроков)
+COURSE_PASSWORD=...         # код доступа к курсу (выдаётся студентам после покупки)
 ```
 
 Никогда не коммитьте ключи и не используйте `NEXT_PUBLIC_` для `SUPABASE_KEY` —
@@ -120,6 +121,11 @@ BLOB_READ_WRITE_TOKEN=...   # токен приватного Vercel Blob-сто
 - **Уроки курса** редактируются через админку (`/admin/course`); редактор содержимого —
   contentEditable с `document.execCommand`, HTML сохраняется в поле `content` урока и
   выводится через `dangerouslySetInnerHTML` с классом `.prose-course` (стили в `globals.css`).
+- **Доступ к курсу только для авторизованных:** страницы `/course`, `/course/[id]` и
+  видео-прокси `/api/video/[id]` закрыты — нужен код доступа (`COURSE_PASSWORD`). Студент
+  вводит его на `/course/access` → ставится cookie `sfm_course` (HMAC, 30 дней). Проверка —
+  `hasCourseAccess()` в `lib/auth.ts` (доступ есть у студента с кодом ИЛИ у админа). Лендинг
+  и форма заявки остаются публичными. Сменить код — переменная `COURSE_PASSWORD` на Vercel.
 - **Видео уроков (Vercel Blob, приватный стор):** файлы лежат в приватном Blob-сторе
   `self-facial-massage-videos`, ссылка хранится в поле `videoFile` урока. Отдаются через
   прокси `app/api/video/[id]/route.ts`: сервер тянет приватный файл с

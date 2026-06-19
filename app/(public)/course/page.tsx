@@ -1,11 +1,15 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getCourse, getContent } from "@/lib/data";
+import { hasCourseAccess } from "@/lib/auth";
 import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
+import { courseLogout } from "./actions";
 
 export const dynamic = "force-dynamic";
 
 export default async function CoursePage() {
+  if (!(await hasCourseAccess())) redirect("/course/access");
   const course = await getCourse();
   const content = await getContent();
   const lessons = course.lessons.filter((l) => l.published);
@@ -64,6 +68,12 @@ export default async function CoursePage() {
           {lessons.length === 0 && (
             <p className="text-center text-mocha">Уроки скоро появятся.</p>
           )}
+
+          <form action={courseLogout} className="pt-4 text-center">
+            <button className="text-sm text-mocha hover:text-terracotta hover:underline">
+              Выйти из курса
+            </button>
+          </form>
         </div>
       </section>
 

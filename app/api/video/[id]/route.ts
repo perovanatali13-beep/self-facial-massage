@@ -1,4 +1,5 @@
 import { getLesson } from "@/lib/data";
+import { hasCourseAccess } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -14,6 +15,9 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  if (!(await hasCourseAccess())) {
+    return new Response("Доступ только для авторизованных", { status: 403 });
+  }
   const lesson = await getLesson(id);
   if (!lesson?.videoFile) {
     return new Response("Not found", { status: 404 });
