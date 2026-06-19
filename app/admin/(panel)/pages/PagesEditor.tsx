@@ -10,6 +10,7 @@ const SECTIONS = [
   { key: "about", label: "Об авторе" },
   { key: "contents", label: "Программа курса" },
   { key: "outcomes", label: "Результаты" },
+  { key: "faceAlarm", label: "Приложение FaceAlarm" },
   { key: "pricing", label: "Стоимость" },
   { key: "faq", label: "Вопросы (FAQ)" },
   { key: "contacts", label: "Контакты" },
@@ -179,6 +180,28 @@ export default function PagesEditor({ initial }: { initial: SiteContent }) {
                 label="Пункты"
                 items={content.outcomes.items}
                 onChange={(items) => update((d) => { d.outcomes.items = items; })}
+              />
+            </>
+          )}
+
+          {active === "faceAlarm" && (
+            <>
+              <Field label="Бейдж" value={content.faceAlarm.badge} onChange={(v) => update((d) => { d.faceAlarm.badge = v; })} />
+              <Field label="Заголовок" value={content.faceAlarm.title} onChange={(v) => update((d) => { d.faceAlarm.title = v; })} />
+              <Field label="Описание" textarea value={content.faceAlarm.subtitle} onChange={(v) => update((d) => { d.faceAlarm.subtitle = v; })} />
+              <Field label="Ссылка App Store" value={content.faceAlarm.appStoreUrl} onChange={(v) => update((d) => { d.faceAlarm.appStoreUrl = v; })} />
+              <Field label="Ссылка Google Play" value={content.faceAlarm.googlePlayUrl} onChange={(v) => update((d) => { d.faceAlarm.googlePlayUrl = v; })} />
+              <Field label="Ссылка «Подробнее»" value={content.faceAlarm.siteUrl} onChange={(v) => update((d) => { d.faceAlarm.siteUrl = v; })} />
+              <ListEditor
+                items={content.faceAlarm.features}
+                onAdd={() => update((d) => { d.faceAlarm.features.push({ title: "", text: "" }); })}
+                onRemove={(i) => update((d) => { d.faceAlarm.features.splice(i, 1); })}
+                render={(item, i) => (
+                  <>
+                    <Field label="Заголовок" value={item.title} onChange={(v) => update((d) => { d.faceAlarm.features[i].title = v; })} />
+                    <Field label="Текст" textarea value={item.text} onChange={(v) => update((d) => { d.faceAlarm.features[i].text = v; })} />
+                  </>
+                )}
               />
             </>
           )}

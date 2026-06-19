@@ -137,6 +137,73 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* FaceAlarm app */}
+      {c.faceAlarm && (
+        <section id="facealarm" className="bg-sand/40 py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 md:grid-cols-2">
+            <div>
+              <span className="inline-block rounded-full bg-teal-light px-4 py-1 text-xs font-medium uppercase tracking-wide text-teal-dark">
+                {c.faceAlarm.badge}
+              </span>
+              <h2 className="mt-5 font-display text-3xl font-semibold text-espresso md:text-4xl">
+                {c.faceAlarm.title}
+              </h2>
+              <p className="mt-4 max-w-lg text-lg text-mocha">{c.faceAlarm.subtitle}</p>
+              <ul className="mt-6 space-y-4">
+                {c.faceAlarm.features.map((f, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal text-sm text-white">
+                      {i + 1}
+                    </span>
+                    <span>
+                      <span className="font-medium text-espresso">{f.title}. </span>
+                      <span className="text-mocha">{f.text}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {c.faceAlarm.appStoreUrl && (
+                  <a
+                    href={c.faceAlarm.appStoreUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full bg-espresso px-6 py-3 text-sm font-medium text-cream transition hover:bg-mocha"
+                  >
+                     App Store
+                  </a>
+                )}
+                {c.faceAlarm.googlePlayUrl && (
+                  <a
+                    href={c.faceAlarm.googlePlayUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full bg-espresso px-6 py-3 text-sm font-medium text-cream transition hover:bg-mocha"
+                  >
+                    ▶ Google Play
+                  </a>
+                )}
+                {c.faceAlarm.siteUrl && (
+                  <a
+                    href={c.faceAlarm.siteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border border-clay px-6 py-3 text-sm font-medium text-espresso transition hover:bg-sand"
+                  >
+                    Подробнее
+                  </a>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="flex h-80 w-64 items-center justify-center rounded-[2.5rem] border-8 border-espresso bg-gradient-to-br from-teal-light via-cream to-rose/40 text-6xl shadow-xl">
+                📸
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Pricing */}
       <section id="pricing" className="bg-espresso py-20 text-cream">
         <div className="mx-auto grid max-w-5xl items-center gap-10 px-5 md:grid-cols-2">

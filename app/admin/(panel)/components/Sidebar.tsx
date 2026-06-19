@@ -47,11 +47,21 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <form action={logout} className="border-t border-slate-200 p-3">
-        <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-slate-500 hover:bg-slate-50">
-          Выйти
-        </button>
-      </form>
+      <div className="border-t border-slate-200 p-3">
+        <Link
+          href="/"
+          target="_blank"
+          className="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-slate-50"
+        >
+          <span className="text-base">↗</span>
+          Открыть сайт
+        </Link>
+        <form action={logout}>
+          <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-slate-500 hover:bg-slate-50">
+            Выйти
+          </button>
+        </form>
+      </div>
     </aside>
   );
 }

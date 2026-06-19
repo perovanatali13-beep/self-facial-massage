@@ -16,6 +16,15 @@ export interface SiteContent {
   };
   contents: { title: string; items: { title: string; text: string }[] };
   outcomes: { title: string; items: string[] };
+  faceAlarm: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    features: { title: string; text: string }[];
+    appStoreUrl: string;
+    googlePlayUrl: string;
+    siteUrl: string;
+  };
   pricing: { title: string; price: string; features: string[]; ctaText: string };
   faq: { title: string; items: { q: string; a: string }[] };
   contacts: { phone: string; email: string; telegram: string };
