@@ -93,6 +93,7 @@ SUPABASE_KEY=...           # ключ Supabase, ТОЛЬКО на сервере
 ADMIN_LOGIN=admin
 ADMIN_PASSWORD=...
 AUTH_SECRET=<длинная случайная строка>
+BLOB_READ_WRITE_TOKEN=...   # токен приватного Vercel Blob-стора (видео уроков)
 ```
 
 Никогда не коммитьте ключи и не используйте `NEXT_PUBLIC_` для `SUPABASE_KEY` —
@@ -119,6 +120,18 @@ AUTH_SECRET=<длинная случайная строка>
 - **Уроки курса** редактируются через админку (`/admin/course`); редактор содержимого —
   contentEditable с `document.execCommand`, HTML сохраняется в поле `content` урока и
   выводится через `dangerouslySetInnerHTML` с классом `.prose-course` (стили в `globals.css`).
+- **Видео уроков (Vercel Blob, приватный стор):** файлы лежат в приватном Blob-сторе
+  `self-facial-massage-videos`, ссылка хранится в поле `videoFile` урока. Отдаются через
+  прокси `app/api/video/[id]/route.ts`: сервер тянет приватный файл с
+  `BLOB_READ_WRITE_TOKEN`, прокидывает `Range` (перемотка) и стримит клиенту — прямой URL
+  наружу не отдаётся. Плеер (`LessonVideo`) с `controlsList="nodownload"` и блокировкой
+  контекстного меню. В админке загрузка идёт **client upload** (`@vercel/blob/client`
+  `upload()` → токен-роут `app/api/admin/blob-upload`), т.к. серверные функции Vercel
+  ограничивают тело запроса ~4.5 МБ. Удаление — `app/api/admin/video` (`del()`).
+  Первичная загрузка из локальной папки — `scripts/upload-videos.mjs`. Приоритет на
+  странице урока: `videoFile` (свой файл) → `videoUrl` (внешний embed) → заглушка.
+  Заметка: приватный Blob не рекомендован для файлов >100 МБ при высоком трафике — здесь
+  трафик низкий, поэтому ок.
 - **Безопасность БД (известное ограничение):** сервер ходит в Supabase publishable-ключом,
   на `documents` стоит разрешающая RLS-политика. Ключ не публикуется (только серверный env),
   но для жёсткой защиты стоит перейти на secret/service-role ключ и закрыть доступ для anon.
