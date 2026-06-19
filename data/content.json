@@ -79,6 +79,16 @@
       { "q": "Нужны ли особые инструменты?", "a": "Нет. Достаточно ваших рук и масла или увлажняющего крема." }
     ]
   },
+  "reviews": {
+    "title": "Отзывы участниц",
+    "images": [
+      "/reviews/review-1.png",
+      "/reviews/review-2.png",
+      "/reviews/review-3.png",
+      "/reviews/review-4.png",
+      "/reviews/review-5.png"
+    ]
+  },
   "contacts": {
     "phone": "+7 999 123-45-67",
     "email": "hello@selffacial.ru",

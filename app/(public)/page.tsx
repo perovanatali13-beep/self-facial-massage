@@ -3,6 +3,7 @@ import { getContent } from "@/lib/data";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import BuyForm from "./components/BuyForm";
+import ReviewsCarousel from "./components/ReviewsCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -263,6 +264,18 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Reviews */}
+      {c.reviews?.images?.length > 0 && (
+        <section id="reviews" className="bg-sand/40 py-20">
+          <div className="mx-auto max-w-6xl px-5">
+            <h2 className="mb-10 text-center font-display text-3xl font-semibold text-espresso">
+              {c.reviews.title}
+            </h2>
+            <ReviewsCarousel images={c.reviews.images} />
+          </div>
+        </section>
+      )}
 
       <SiteFooter contacts={c.contacts} />
     </>

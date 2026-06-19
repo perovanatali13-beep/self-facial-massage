@@ -28,6 +28,7 @@ export interface SiteContent {
   };
   pricing: { title: string; price: string; features: string[]; ctaText: string };
   faq: { title: string; items: { q: string; a: string }[] };
+  reviews: { title: string; images: string[] };
   contacts: { phone: string; email: string; telegram: string };
 }
 

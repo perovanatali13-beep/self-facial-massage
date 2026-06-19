@@ -13,6 +13,7 @@ const SECTIONS = [
   { key: "faceAlarm", label: "Приложение FaceAlarm" },
   { key: "pricing", label: "Стоимость" },
   { key: "faq", label: "Вопросы (FAQ)" },
+  { key: "reviews", label: "Отзывы" },
   { key: "contacts", label: "Контакты" },
 ] as const;
 
@@ -233,6 +234,17 @@ export default function PagesEditor({ initial }: { initial: SiteContent }) {
                     <Field label="Ответ" textarea value={item.a} onChange={(v) => update((d) => { d.faq.items[i].a = v; })} />
                   </>
                 )}
+              />
+            </>
+          )}
+
+          {active === "reviews" && (
+            <>
+              <Field label="Заголовок секции" value={content.reviews.title} onChange={(v) => update((d) => { d.reviews.title = v; })} />
+              <StringListEditor
+                label="Изображения отзывов (URL или путь)"
+                items={content.reviews.images}
+                onChange={(items) => update((d) => { d.reviews.images = items; })}
               />
             </>
           )}
