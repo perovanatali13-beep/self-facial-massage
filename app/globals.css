@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #faf6f1;
+  --color-sand: #f0e6dc;
+  --color-clay: #c9a896;
+  --color-terracotta: #b5806b;
+  --color-rose: #d9a7a0;
+  --color-espresso: #3a302b;
+  --color-mocha: #6b5d54;
+
+  --color-teal: #0f766e;
+  --color-teal-dark: #115e59;
+  --color-teal-light: #ccfbf1;
+
+  --font-serif: "Georgia", "Times New Roman", serif;
+
+  --radius-soft: 1.25rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+}
+
+/* Rich text rendered from the admin editor */
+.prose-course h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 1.6rem 0 0.8rem;
+  color: var(--color-espresso);
+}
+.prose-course h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.2rem 0 0.6rem;
+  color: var(--color-terracotta);
+}
+.prose-course p {
+  margin: 0.75rem 0;
+  line-height: 1.75;
+  color: var(--color-mocha);
+}
+.prose-course ul,
+.prose-course ol {
+  margin: 0.75rem 0 0.75rem 1.5rem;
+  line-height: 1.75;
+  color: var(--color-mocha);
+}
+.prose-course ul {
+  list-style: disc;
+}
+.prose-course ol {
+  list-style: decimal;
+}
+.prose-course a {
+  color: var(--color-terracotta);
+  text-decoration: underline;
+}
