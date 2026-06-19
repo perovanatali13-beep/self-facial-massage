@@ -1,6 +1,9 @@
 # Самомассаж лица — сайт курса
 
-Сайт на **Next.js 15 (App Router)** + **Tailwind CSS v4** с лендингом, страницей курса и админ-панелью.
+Сайт на **Next.js 15 (App Router)** + **Tailwind CSS v4** с лендингом, страницей курса и админ-панелью. Данные хранятся в **Supabase**.
+
+**Live:** https://self-facial-massage.vercel.app
+**Админка:** https://self-facial-massage.vercel.app/admin
 
 ## Структура
 
@@ -43,18 +46,45 @@ ADMIN_PASSWORD=надёжный_пароль
 AUTH_SECRET=случайная_строка_для_подписи_сессии
 ```
 
-## Хранение данных
+## Хранение данных (Supabase)
 
-Контент хранится в JSON-файлах в папке `data/`:
+Контент хранится в Supabase (проект **self-facial-massage**) в таблице
+`public.documents` — по одному JSON-документу на ключ:
 
-- `content.json` — секции лендинга
-- `lessons.json` — уроки курса
-- `users.json` — пользователи админки
-- `leads.json` — заявки с формы
+- `content` — секции лендинга
+- `course` — уроки курса
+- `users` — пользователи админки
+- `leads` — заявки с формы
 
-Админка читает и записывает эти файлы напрямую. Для деплоя на serverless-платформы
-(Vercel) файловая запись недоступна — данные стоит перенести в БД (например,
-Postgres/KV из Vercel Marketplace), сохранив интерфейс `lib/data.ts`.
+Весь доступ к БД идёт через сервер (Server Components и Route Handlers),
+защищённый собственной авторизацией админки. Интерфейс — `lib/data.ts`.
+
+Файлы в папке `data/` остаются как исходные данные для первичного заполнения:
+
+```bash
+npm run seed   # читает data/*.json и загружает в Supabase
+```
+
+### Переменные окружения
+
+Локально — `.env.local`, в проде — настройки проекта на Vercel:
+
+```
+SUPABASE_URL=https://<ref>.supabase.co
+SUPABASE_KEY=sb_publishable_...   # publishable-ключ Supabase (только на сервере)
+ADMIN_LOGIN=admin
+ADMIN_PASSWORD=...
+AUTH_SECRET=<длинная случайная строка>
+```
+
+## Деплой
+
+Проект подключён к Vercel и к репозиторию GitHub — каждый `git push` в `main`
+автоматически разворачивает новую версию. Ручной деплой:
+
+```bash
+vercel deploy --prod
+```
 
 ## Технологии
 
