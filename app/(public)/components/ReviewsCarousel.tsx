@@ -1,16 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ReviewsCarousel({ images }: { images: string[] }) {
   const [i, setI] = useState(0);
-  if (!images.length) return null;
+  const [paused, setPaused] = useState(false);
 
   const prev = () => setI((v) => (v - 1 + images.length) % images.length);
   const next = () => setI((v) => (v + 1) % images.length);
 
+  // Автопрокрутка каждые 5 секунд (пауза при наведении)
+  useEffect(() => {
+    if (paused || images.length < 2) return;
+    const id = setInterval(() => {
+      setI((v) => (v + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(id);
+  }, [paused, images.length]);
+
+  if (!images.length) return null;
+
   return (
-    <div className="mx-auto max-w-3xl">
+    <div
+      className="mx-auto max-w-3xl"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="relative">
         <div className="flex min-h-[180px] items-center justify-center rounded-soft border border-sand bg-white p-5 shadow-sm sm:p-8">
           {/* eslint-disable-next-line @next/next/no-img-element */}
