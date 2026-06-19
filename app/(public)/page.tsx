@@ -96,6 +96,18 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* Mission statement */}
+      {c.about.mission && (
+        <section className="bg-terracotta/10 py-14">
+          <div className="mx-auto max-w-3xl px-5 text-center">
+            <span className="font-display text-5xl leading-none text-terracotta">“</span>
+            <p className="mt-2 font-display text-2xl font-medium leading-relaxed text-espresso md:text-[1.7rem]">
+              {c.about.mission}
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Course contents */}
       <section id="contents" className="bg-sand/40 py-16">
         <div className="mx-auto max-w-6xl px-5">

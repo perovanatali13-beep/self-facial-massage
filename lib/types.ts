@@ -11,6 +11,7 @@ export interface SiteContent {
     name: string;
     role: string;
     text: string;
+    mission: string;
     credentials: string[];
     imageEmoji: string;
   };

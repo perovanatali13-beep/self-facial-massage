@@ -148,6 +148,7 @@ export default function PagesEditor({ initial }: { initial: SiteContent }) {
               <Field label="Имя" value={content.about.name} onChange={(v) => update((d) => { d.about.name = v; })} />
               <Field label="Роль" value={content.about.role} onChange={(v) => update((d) => { d.about.role = v; })} />
               <Field label="Описание" textarea value={content.about.text} onChange={(v) => update((d) => { d.about.text = v; })} />
+              <Field label="Фраза-миссия (выделенный блок)" textarea value={content.about.mission} onChange={(v) => update((d) => { d.about.mission = v; })} />
               <Field label="Эмодзи/символ" value={content.about.imageEmoji} onChange={(v) => update((d) => { d.about.imageEmoji = v; })} />
               <StringListEditor
                 label="Регалии"
