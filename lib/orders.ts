@@ -37,6 +37,14 @@ export async function createOrder(o: {
   if (error) throw new Error(error.message);
 }
 
+export async function getOrders(): Promise<Order[]> {
+  const { data } = await getSupabase()
+    .from("orders")
+    .select("*")
+    .order("created_at", { ascending: false });
+  return (data as Order[]) ?? [];
+}
+
 export async function getOrder(orderId: string): Promise<Order | null> {
   const { data } = await getSupabase()
     .from("orders")
