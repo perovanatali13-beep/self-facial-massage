@@ -56,7 +56,8 @@
     ],
     "appStoreUrl": "https://face-alarm.com",
     "googlePlayUrl": "https://face-alarm.com",
-    "siteUrl": "https://face-alarm.com"
+    "siteUrl": "https://face-alarm.com",
+    "imageUrl": "/facealarm-mockup.png"
   },
   "pricing": {
     "title": "Стоимость",

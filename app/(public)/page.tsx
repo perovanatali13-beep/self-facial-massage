@@ -196,9 +196,18 @@ export default async function LandingPage() {
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="flex h-80 w-64 items-center justify-center rounded-[2.5rem] border-8 border-espresso bg-gradient-to-br from-teal-light via-cream to-rose/40 text-6xl shadow-xl">
-                📸
-              </div>
+              {c.faceAlarm.imageUrl ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={c.faceAlarm.imageUrl}
+                  alt="Приложение FaceAlarm — трекер для лица"
+                  className="w-64 rounded-[2rem] shadow-xl md:w-72"
+                />
+              ) : (
+                <div className="flex h-80 w-64 items-center justify-center rounded-[2.5rem] border-8 border-espresso bg-gradient-to-br from-teal-light via-cream to-rose/40 text-6xl shadow-xl">
+                  📸
+                </div>
+              )}
             </div>
           </div>
         </section>

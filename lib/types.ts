@@ -24,6 +24,7 @@ export interface SiteContent {
     appStoreUrl: string;
     googlePlayUrl: string;
     siteUrl: string;
+    imageUrl: string;
   };
   pricing: { title: string; price: string; features: string[]; ctaText: string };
   faq: { title: string; items: { q: string; a: string }[] };

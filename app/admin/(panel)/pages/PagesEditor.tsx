@@ -192,6 +192,7 @@ export default function PagesEditor({ initial }: { initial: SiteContent }) {
               <Field label="Ссылка App Store" value={content.faceAlarm.appStoreUrl} onChange={(v) => update((d) => { d.faceAlarm.appStoreUrl = v; })} />
               <Field label="Ссылка Google Play" value={content.faceAlarm.googlePlayUrl} onChange={(v) => update((d) => { d.faceAlarm.googlePlayUrl = v; })} />
               <Field label="Ссылка «Подробнее»" value={content.faceAlarm.siteUrl} onChange={(v) => update((d) => { d.faceAlarm.siteUrl = v; })} />
+              <Field label="Изображение (URL или путь)" value={content.faceAlarm.imageUrl} onChange={(v) => update((d) => { d.faceAlarm.imageUrl = v; })} />
               <ListEditor
                 items={content.faceAlarm.features}
                 onAdd={() => update((d) => { d.faceAlarm.features.push({ title: "", text: "" }); })}
