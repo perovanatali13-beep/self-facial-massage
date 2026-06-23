@@ -34,13 +34,31 @@ export default async function CoursePage() {
       </section>
 
       <section className="py-12">
-        <div className="mx-auto max-w-3xl px-5">
+        <div className="mx-auto max-w-3xl space-y-4 px-5">
           <div className="rounded-soft border border-sand bg-white p-6">
             <h2 className="font-display text-lg font-semibold text-espresso">
               {glue("Инструкция к курсу")}
             </h2>
             <p className="mt-2 text-mocha">{course.intro.instruction}</p>
           </div>
+
+          <Link
+            href="/course/test"
+            className="flex items-center justify-between gap-4 rounded-soft border border-sand bg-white p-6 transition hover:border-terracotta hover:shadow-md"
+          >
+            <div>
+              <span className="text-xs font-medium uppercase tracking-wide text-clay">
+                Анкета
+              </span>
+              <h2 className="font-display text-lg font-semibold text-espresso">
+                {glue("Определите свой тип кожи")}
+              </h2>
+              <p className="mt-1 text-sm text-mocha">
+                {glue("Пройдите тест по Л. Бауманн и получите рекомендации по уходу.")}
+              </p>
+            </div>
+            <span className="shrink-0 text-2xl text-terracotta">→</span>
+          </Link>
         </div>
       </section>
 
