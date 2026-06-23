@@ -18,6 +18,7 @@ export default function SkinTest() {
 
   const current = QUESTIONS[step];
   const section = SECTIONS.find((s) => s.key === current?.section);
+  const currentSectionIndex = SECTIONS.findIndex((s) => s.key === current?.section);
   const selected = current ? answers[current.id] : undefined;
   const answeredCount = Object.keys(answers).length;
   const isLast = step === total - 1;
@@ -123,64 +124,70 @@ export default function SkinTest() {
     );
   }
 
-  const progress = ((finished ? total : step) / total) * 100;
-
   return (
     <div className="mx-auto max-w-2xl px-5 py-10">
-      {/* Таймлайн прогресса */}
+      {/* Таймлайн: четыре секции анкеты */}
       <div className="mb-8">
-        <div className="flex items-center justify-between text-xs font-medium uppercase tracking-wide text-clay">
-          <span>{section?.title}</span>
-          <span>
-            Вопрос {step + 1} из {total}
-          </span>
-        </div>
-        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-sand">
-          <div
-            className="h-full rounded-full bg-terracotta transition-all duration-300"
-            style={{ width: `${Math.max(progress, (1 / total) * 100)}%` }}
-          />
-        </div>
-      </div>
-
-      <div className="rounded-soft border border-sand bg-white p-7 shadow-sm">
-        {section && step === firstIndexOf(current.section) && (
-          <p className="mb-4 text-sm italic text-mocha">{section.intro}</p>
-        )}
-        <h2 className="font-display text-2xl font-semibold leading-snug text-espresso">
-          {current.text}
-        </h2>
-
-        <div className="mt-6 space-y-3">
-          {current.options.map((opt, i) => {
-            const active = selected === opt.points && answeredFor(answers, current.id);
+        <div className="grid grid-cols-4 gap-2 sm:gap-3">
+          {SECTIONS.map((s, i) => {
+            const filled = i <= currentSectionIndex;
+            const active = i === currentSectionIndex;
             return (
-              <button
-                key={i}
-                onClick={() => choose(opt.points)}
-                className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition ${
-                  active
-                    ? "border-terracotta bg-sand/50 text-espresso"
-                    : "border-sand bg-cream text-mocha hover:border-clay"
-                }`}
-              >
-                <span
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
-                    active ? "border-terracotta" : "border-clay"
+              <div key={s.key}>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-sand">
+                  <div
+                    className="h-full rounded-full bg-terracotta transition-all duration-300"
+                    style={{ width: filled ? "100%" : "0%" }}
+                  />
+                </div>
+                <p
+                  className={`mt-2 text-[11px] leading-tight sm:text-xs ${
+                    active ? "font-medium text-terracotta" : "text-mocha"
                   }`}
                 >
-                  {active && (
-                    <span className="h-2.5 w-2.5 rounded-full bg-terracotta" />
-                  )}
-                </span>
-                <span>{opt.text}</span>
-              </button>
+                  {s.title}
+                </p>
+              </div>
             );
           })}
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-between">
+      <p className="text-xs font-semibold uppercase tracking-wide text-terracotta">
+        {section?.title} · Вопрос {step + 1} из {total}
+      </p>
+
+      <h2 className="mt-3 font-display text-3xl font-semibold leading-snug text-espresso md:text-4xl">
+        {current.text}
+      </h2>
+
+      <div className="mt-7 space-y-3">
+        {current.options.map((opt, i) => {
+          const active = answeredFor(answers, current.id) && selected === opt.points;
+          return (
+            <button
+              key={i}
+              onClick={() => choose(opt.points)}
+              className={`flex w-full items-center gap-3 rounded-2xl border bg-white px-5 py-4 text-left text-base transition ${
+                active
+                  ? "border-terracotta text-espresso shadow-sm"
+                  : "border-sand text-mocha hover:border-clay"
+              }`}
+            >
+              <span
+                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
+                  active ? "border-terracotta" : "border-clay"
+                }`}
+              >
+                {active && <span className="h-2.5 w-2.5 rounded-full bg-terracotta" />}
+              </span>
+              <span>{opt.text}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-8 flex items-center justify-between">
         <button
           onClick={back}
           disabled={step === 0}
@@ -202,11 +209,6 @@ export default function SkinTest() {
       </p>
     </div>
   );
-}
-
-// Индекс первого вопроса секции — чтобы показывать вступление один раз.
-function firstIndexOf(section: SectionKey): number {
-  return QUESTIONS.findIndex((q) => q.section === section);
 }
 
 // 0 баллов — валидный ответ (бонусные вопросы), поэтому проверяем наличие ключа.

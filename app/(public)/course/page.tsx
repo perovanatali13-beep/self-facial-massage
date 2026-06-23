@@ -34,31 +34,13 @@ export default async function CoursePage() {
       </section>
 
       <section className="py-12">
-        <div className="mx-auto max-w-3xl space-y-4 px-5">
+        <div className="mx-auto max-w-3xl px-5">
           <div className="rounded-soft border border-sand bg-white p-6">
             <h2 className="font-display text-lg font-semibold text-espresso">
               {glue("Инструкция к курсу")}
             </h2>
             <p className="mt-2 text-mocha">{course.intro.instruction}</p>
           </div>
-
-          <Link
-            href="/course/test"
-            className="flex items-center justify-between gap-4 rounded-soft border border-sand bg-white p-6 transition hover:border-terracotta hover:shadow-md"
-          >
-            <div>
-              <span className="text-xs font-medium uppercase tracking-wide text-clay">
-                Анкета
-              </span>
-              <h2 className="font-display text-lg font-semibold text-espresso">
-                {glue("Определите свой тип кожи")}
-              </h2>
-              <p className="mt-1 text-sm text-mocha">
-                {glue("Пройдите тест по Л. Бауманн и получите рекомендации по уходу.")}
-              </p>
-            </div>
-            <span className="shrink-0 text-2xl text-terracotta">→</span>
-          </Link>
         </div>
       </section>
 
@@ -87,6 +69,26 @@ export default async function CoursePage() {
           {lessons.length === 0 && (
             <p className="text-center text-mocha">Уроки скоро появятся.</p>
           )}
+
+          <Link
+            href="/course/test"
+            className="mt-6 block rounded-soft bg-espresso px-6 py-12 text-center transition hover:bg-espresso/90"
+          >
+            <span className="text-xs font-medium uppercase tracking-wide text-rose">
+              Бонус к курсу
+            </span>
+            <h2 className="mt-3 font-display text-3xl font-semibold text-cream md:text-4xl">
+              {glue("Определите свой тип кожи")}
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-clay">
+              {glue(
+                "Пройдите анкету по классификации Лесли Бауманн — узнайте свой тип кожи и получите персональные рекомендации по уходу.",
+              )}
+            </p>
+            <span className="mt-7 inline-block rounded-full bg-terracotta px-8 py-3 font-medium text-white transition hover:bg-clay">
+              {glue("Пройти тест на тип кожи")}
+            </span>
+          </Link>
 
           <form action={courseLogout} className="pt-4 text-center">
             <button className="text-sm text-mocha hover:text-terracotta hover:underline">
