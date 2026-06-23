@@ -10,6 +10,16 @@ import FeatureIcon, { outcomeIcon } from "./components/FeatureIcon";
 
 export const dynamic = "force-dynamic";
 
+// Скриншоты отзывов участниц (в public/reviews). Используются, если в контенте
+// (документ `content`, поле reviews.images) список отзывов не задан.
+const REVIEW_IMAGES = [
+  "/reviews/review-1.png",
+  "/reviews/review-2.png",
+  "/reviews/review-3.png",
+  "/reviews/review-4.png",
+  "/reviews/review-5.png",
+];
+
 export default async function LandingPage() {
   const c = glueDeep(await getContent());
 
@@ -297,28 +307,33 @@ export default async function LandingPage() {
       </section>
 
       {/* Reviews */}
-      {(c.reviews?.quote || (c.reviews?.images?.length ?? 0) > 0) && (
-        <section id="reviews" className="bg-sand/40 py-20">
-          <div className="mx-auto max-w-6xl px-5">
-            <h2 className="mb-10 text-center font-display text-3xl font-semibold text-espresso">
-              {c.reviews.title}
-            </h2>
-            {c.reviews.quote ? (
-              <figure className="mx-auto max-w-3xl text-center">
-                <span className="font-display text-5xl leading-none text-terracotta">“</span>
-                <blockquote className="mt-2 font-display text-2xl font-medium leading-relaxed text-espresso md:text-[1.7rem]">
-                  {c.reviews.quote}
-                </blockquote>
-                {c.reviews.author && (
-                  <figcaption className="mt-5 text-mocha">— {c.reviews.author}</figcaption>
-                )}
-              </figure>
-            ) : (
-              <ReviewsCarousel images={c.reviews.images!} />
-            )}
+      <section id="reviews" className="bg-sand/40 py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <h2 className="text-center font-display text-3xl font-semibold text-espresso">
+            {c.reviews?.title || "Отзывы участниц"}
+          </h2>
+
+          {c.reviews?.quote && (
+            <figure className="mx-auto mt-10 max-w-3xl text-center">
+              <span className="font-display text-5xl leading-none text-terracotta">“</span>
+              <blockquote className="mt-2 font-display text-2xl font-medium leading-relaxed text-espresso md:text-[1.7rem]">
+                {c.reviews.quote}
+              </blockquote>
+              {c.reviews.author && (
+                <figcaption className="mt-5 text-mocha">— {c.reviews.author}</figcaption>
+              )}
+            </figure>
+          )}
+
+          <div className={c.reviews?.quote ? "mt-12" : "mt-10"}>
+            <ReviewsCarousel
+              images={
+                c.reviews?.images?.length ? c.reviews.images : REVIEW_IMAGES
+              }
+            />
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       <SiteFooter contacts={c.contacts} />
     </>
