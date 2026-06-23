@@ -8,17 +8,9 @@ import BuyForm from "./components/BuyForm";
 import ReviewsCarousel from "./components/ReviewsCarousel";
 import FeatureIcon, { outcomeIcon } from "./components/FeatureIcon";
 
-export const dynamic = "force-dynamic";
+import { DEFAULT_REVIEW_IMAGES } from "@/lib/reviews";
 
-// Скриншоты отзывов участниц (в public/reviews). Используются, если в контенте
-// (документ `content`, поле reviews.images) список отзывов не задан.
-const REVIEW_IMAGES = [
-  "/reviews/review-1.png",
-  "/reviews/review-2.png",
-  "/reviews/review-3.png",
-  "/reviews/review-4.png",
-  "/reviews/review-5.png",
-];
+export const dynamic = "force-dynamic";
 
 export default async function LandingPage() {
   const c = glueDeep(await getContent());
@@ -328,7 +320,7 @@ export default async function LandingPage() {
           <div className={c.reviews?.quote ? "mt-12" : "mt-10"}>
             <ReviewsCarousel
               images={
-                c.reviews?.images?.length ? c.reviews.images : REVIEW_IMAGES
+                c.reviews?.images?.length ? c.reviews.images : DEFAULT_REVIEW_IMAGES
               }
             />
           </div>

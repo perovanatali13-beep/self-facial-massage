@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { SiteContent } from "@/lib/types";
+import { DEFAULT_REVIEW_IMAGES } from "@/lib/reviews";
 
 const SECTIONS = [
   { key: "hero", label: "Первый экран" },
@@ -244,6 +245,10 @@ export default function PagesEditor({ initial }: { initial: SiteContent }) {
               <Field label="Заголовок секции" value={content.reviews.title} onChange={(v) => update((d) => { d.reviews.title = v; })} />
               <Field label="Цитата" textarea value={content.reviews.quote ?? ""} onChange={(v) => update((d) => { d.reviews.quote = v; })} />
               <Field label="Автор" value={content.reviews.author ?? ""} onChange={(v) => update((d) => { d.reviews.author = v; })} />
+              <ReviewImagesEditor
+                images={content.reviews.images?.length ? content.reviews.images : DEFAULT_REVIEW_IMAGES}
+                onChange={(imgs) => update((d) => { d.reviews.images = imgs; })}
+              />
             </>
           )}
 
@@ -306,6 +311,88 @@ function ListEditor<T>({
       >
         + Добавить
       </button>
+    </div>
+  );
+}
+
+function ReviewImagesEditor({
+  images,
+  onChange,
+}: {
+  images: string[];
+  onChange: (images: string[]) => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [err, setErr] = useState("");
+
+  async function onFiles(files: FileList | null) {
+    if (!files?.length) return;
+    setErr("");
+    setUploading(true);
+    const added: string[] = [];
+    for (const file of Array.from(files)) {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/admin/review-image", { method: "POST", body: fd });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.url) {
+        added.push(data.url);
+      } else {
+        setErr(data.error || "Не удалось загрузить");
+        break;
+      }
+    }
+    setUploading(false);
+    if (added.length) onChange([...images, ...added]);
+  }
+
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-medium text-slate-600">
+        Скриншоты отзывов (карусель на лендинге)
+      </label>
+      {images.length > 0 ? (
+        <div className="grid grid-cols-3 gap-3">
+          {images.map((src, i) => (
+            <div
+              key={`${src}-${i}`}
+              className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={src} alt={`Отзыв ${i + 1}`} className="h-28 w-full object-contain" />
+              <button
+                type="button"
+                onClick={() => onChange(images.filter((_, j) => j !== i))}
+                aria-label="Удалить"
+                className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-slate-500 shadow hover:text-red-500"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-slate-400">Пока нет изображений.</p>
+      )}
+
+      <label className="mt-3 inline-block cursor-pointer rounded-lg border border-dashed border-slate-300 px-4 py-2 text-sm text-slate-500 hover:border-teal hover:text-teal">
+        {uploading ? "Загрузка…" : "+ Добавить изображение"}
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          disabled={uploading}
+          className="hidden"
+          onChange={(e) => {
+            onFiles(e.target.files);
+            e.target.value = "";
+          }}
+        />
+      </label>
+      {err && <p className="mt-2 text-sm text-red-500">{err}</p>}
+      <p className="mt-2 text-xs text-slate-400">
+        Изменения применятся после кнопки «Сохранить».
+      </p>
     </div>
   );
 }
