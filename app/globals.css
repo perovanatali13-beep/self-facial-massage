@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #faf6f1;
-  --color-sand: #f0e6dc;
-  --color-clay: #c9a896;
-  --color-terracotta: #b5806b;
-  --color-rose: #d9a7a0;
-  --color-espresso: #3a302b;
-  --color-mocha: #6b5d54;
+  /* Палитра — пыльно-розовые оттенки (имена сохранены ради совместимости) */
+  --color-cream: #fbf5f4;
+  --color-sand: #f3e5e5;
+  --color-clay: #c7a1a6;
+  --color-terracotta: #ad757e;
+  --color-rose: #d7a4ab;
+  --color-espresso: #42333a;
+  --color-mocha: #705e65;
 
   --color-teal: #0f766e;
   --color-teal-dark: #115e59;
@@ -20,6 +21,14 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Органичная «капля» с плавными неровными краями — для фото в hero */
+.blob {
+  border-radius: 42% 58% 56% 44% / 48% 42% 58% 52%;
+}
+.blob-alt {
+  border-radius: 58% 42% 47% 53% / 42% 56% 44% 58%;
 }
 
 body {

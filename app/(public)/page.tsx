@@ -6,6 +6,7 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import BuyForm from "./components/BuyForm";
 import ReviewsCarousel from "./components/ReviewsCarousel";
+import FeatureIcon from "./components/FeatureIcon";
 
 export const dynamic = "force-dynamic";
 
@@ -42,9 +43,9 @@ export default async function LandingPage() {
               </Link>
             </div>
           </div>
-          <div className="flex justify-center">
-            <div className="relative h-72 w-72 overflow-hidden rounded-full shadow-xl ring-8 ring-white md:h-96 md:w-96">
-              <div className="absolute inset-0 -z-10 scale-110 rounded-full bg-gradient-to-br from-rose/60 via-sand to-clay/50" />
+          <div className="relative flex justify-center">
+            <div className="blob-alt absolute left-1/2 top-1/2 h-80 w-80 -translate-x-[46%] -translate-y-[46%] bg-gradient-to-br from-rose/50 via-sand to-clay/40 md:h-[26rem] md:w-[26rem]" />
+            <div className="blob relative h-72 w-72 overflow-hidden shadow-xl ring-8 ring-white md:h-96 md:w-96">
               <Image
                 src="/hero-woman.jpg"
                 alt="Ухоженное лицо женщины после самомассажа"
@@ -67,6 +68,9 @@ export default async function LandingPage() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {c.problems.items.map((item, i) => (
               <div key={i} className="rounded-soft bg-white p-6 shadow-sm">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-sand text-terracotta">
+                  <FeatureIcon index={i} className="h-6 w-6" />
+                </div>
                 <h3 className="font-display text-lg font-semibold text-terracotta">
                   {item.title}
                 </h3>
@@ -156,9 +160,11 @@ export default async function LandingPage() {
             {c.outcomes.items.map((o, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 rounded-soft bg-sand/60 px-6 py-5 text-left text-espresso"
+                className="flex items-center gap-4 rounded-soft bg-sand/60 px-6 py-5 text-left text-espresso"
               >
-                <span className="text-2xl text-terracotta">✓</span>
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-terracotta shadow-sm">
+                  <FeatureIcon index={i} className="h-6 w-6" />
+                </span>
                 <span className="font-medium">{o}</span>
               </div>
             ))}
