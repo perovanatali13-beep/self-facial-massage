@@ -81,8 +81,14 @@ export default async function LandingPage() {
       <section id="about" className="py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 md:grid-cols-2">
           <div className="order-2 flex justify-center md:order-1">
-            <div className="flex h-72 w-72 items-center justify-center rounded-soft bg-gradient-to-br from-clay/40 to-rose/50 text-7xl text-white shadow-lg">
-              {c.about.imageEmoji}
+            <div className="relative h-72 w-72 overflow-hidden rounded-soft shadow-lg md:h-96 md:w-96">
+              <Image
+                src="/author.jpg"
+                alt={c.about.name}
+                fill
+                sizes="(min-width: 768px) 384px, 288px"
+                className="object-cover"
+              />
             </div>
           </div>
           <div className="order-1 md:order-2">
