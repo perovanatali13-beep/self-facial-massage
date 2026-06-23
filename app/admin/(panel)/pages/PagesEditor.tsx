@@ -242,11 +242,8 @@ export default function PagesEditor({ initial }: { initial: SiteContent }) {
           {active === "reviews" && (
             <>
               <Field label="Заголовок секции" value={content.reviews.title} onChange={(v) => update((d) => { d.reviews.title = v; })} />
-              <StringListEditor
-                label="Изображения отзывов (URL или путь)"
-                items={content.reviews.images}
-                onChange={(items) => update((d) => { d.reviews.images = items; })}
-              />
+              <Field label="Цитата" textarea value={content.reviews.quote ?? ""} onChange={(v) => update((d) => { d.reviews.quote = v; })} />
+              <Field label="Автор" value={content.reviews.author ?? ""} onChange={(v) => update((d) => { d.reviews.author = v; })} />
             </>
           )}
 

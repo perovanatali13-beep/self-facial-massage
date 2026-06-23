@@ -278,13 +278,25 @@ export default async function LandingPage() {
       </section>
 
       {/* Reviews */}
-      {c.reviews?.images?.length > 0 && (
+      {(c.reviews?.quote || (c.reviews?.images?.length ?? 0) > 0) && (
         <section id="reviews" className="bg-sand/40 py-20">
           <div className="mx-auto max-w-6xl px-5">
             <h2 className="mb-10 text-center font-display text-3xl font-semibold text-espresso">
               {c.reviews.title}
             </h2>
-            <ReviewsCarousel images={c.reviews.images} />
+            {c.reviews.quote ? (
+              <figure className="mx-auto max-w-3xl text-center">
+                <span className="font-display text-5xl leading-none text-terracotta">“</span>
+                <blockquote className="mt-2 font-display text-2xl font-medium leading-relaxed text-espresso md:text-[1.7rem]">
+                  {c.reviews.quote}
+                </blockquote>
+                {c.reviews.author && (
+                  <figcaption className="mt-5 text-mocha">— {c.reviews.author}</figcaption>
+                )}
+              </figure>
+            ) : (
+              <ReviewsCarousel images={c.reviews.images!} />
+            )}
           </div>
         </section>
       )}
