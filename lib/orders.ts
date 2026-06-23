@@ -76,6 +76,14 @@ export async function markOrderPaid(orderId: string): Promise<string | null> {
   return code;
 }
 
+export async function deleteOrder(orderId: string): Promise<void> {
+  const { error } = await getSupabase()
+    .from("orders")
+    .delete()
+    .eq("order_id", orderId);
+  if (error) throw new Error(error.message);
+}
+
 /** Действителен ли код доступа (есть оплаченный заказ с таким кодом). */
 export async function verifyAccessCode(code: string): Promise<boolean> {
   if (!code) return false;
