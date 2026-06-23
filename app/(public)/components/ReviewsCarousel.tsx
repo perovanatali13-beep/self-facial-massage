@@ -27,12 +27,12 @@ export default function ReviewsCarousel({ images }: { images: string[] }) {
       onMouseLeave={() => setPaused(false)}
     >
       <div className="relative">
-        <div className="flex min-h-[180px] items-center justify-center rounded-soft border border-sand bg-white p-5 shadow-sm sm:p-8">
+        <div className="flex h-[250px] items-center justify-center rounded-soft border border-sand bg-white p-4 shadow-sm sm:h-[270px] sm:p-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={images[i]}
             alt={`Отзыв ${i + 1}`}
-            className="max-h-[60vh] w-full rounded-lg object-contain"
+            className="max-h-full max-w-[420px] rounded-lg object-contain"
           />
         </div>
 
