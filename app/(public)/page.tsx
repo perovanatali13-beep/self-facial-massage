@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getContent } from "@/lib/data";
 import { glue, glueDeep } from "@/lib/typography";
 import SiteHeader from "./components/SiteHeader";
@@ -42,8 +43,16 @@ export default async function LandingPage() {
             </div>
           </div>
           <div className="flex justify-center">
-            <div className="flex h-72 w-72 items-center justify-center rounded-full bg-gradient-to-br from-rose/60 via-sand to-clay/50 text-8xl text-terracotta shadow-inner md:h-96 md:w-96">
-              {c.hero.imageEmoji}
+            <div className="relative h-72 w-72 overflow-hidden rounded-full shadow-xl ring-8 ring-white md:h-96 md:w-96">
+              <div className="absolute inset-0 -z-10 scale-110 rounded-full bg-gradient-to-br from-rose/60 via-sand to-clay/50" />
+              <Image
+                src="/hero-woman.jpg"
+                alt="Ухоженное лицо женщины после самомассажа"
+                fill
+                priority
+                sizes="(min-width: 768px) 384px, 288px"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
