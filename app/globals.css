@@ -10,9 +10,10 @@
   --color-espresso: #42333a;
   --color-mocha: #705e65;
 
-  --color-teal: #0f766e;
-  --color-teal-dark: #115e59;
-  --color-teal-light: #ccfbf1;
+  /* Акцентный цвет (имена сохранены) — глубокий ягодно-розовый под пыльно-розовую палитру */
+  --color-teal: #9b6273;
+  --color-teal-dark: #7e4d5d;
+  --color-teal-light: #f2dde2;
 
   --font-serif: "Georgia", "Times New Roman", serif;
 

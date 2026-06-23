@@ -6,7 +6,7 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import BuyForm from "./components/BuyForm";
 import ReviewsCarousel from "./components/ReviewsCarousel";
-import FeatureIcon from "./components/FeatureIcon";
+import FeatureIcon, { outcomeIcon } from "./components/FeatureIcon";
 
 export const dynamic = "force-dynamic";
 
@@ -68,9 +68,6 @@ export default async function LandingPage() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {c.problems.items.map((item, i) => (
               <div key={i} className="rounded-soft bg-white p-6 shadow-sm">
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-sand text-terracotta">
-                  <FeatureIcon index={i} className="h-6 w-6" />
-                </div>
                 <h3 className="font-display text-lg font-semibold text-terracotta">
                   {item.title}
                 </h3>
@@ -136,8 +133,8 @@ export default async function LandingPage() {
           </h2>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {c.contents.items.map((item, i) => (
-              <div key={i} className="rounded-soft bg-white p-6 shadow-sm">
-                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-teal-light text-teal-dark">
+              <div key={i} className="rounded-soft bg-white p-6 text-center shadow-sm">
+                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-teal-light text-base font-semibold leading-none text-teal-dark">
                   {i + 1}
                 </div>
                 <h3 className="font-display text-lg font-semibold text-espresso">
@@ -163,7 +160,7 @@ export default async function LandingPage() {
                 className="flex items-center gap-4 rounded-soft bg-sand/60 px-6 py-5 text-left text-espresso"
               >
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-terracotta shadow-sm">
-                  <FeatureIcon index={i} className="h-6 w-6" />
+                  <FeatureIcon name={outcomeIcon(o)} className="h-6 w-6" />
                 </span>
                 <span className="font-medium">{o}</span>
               </div>
