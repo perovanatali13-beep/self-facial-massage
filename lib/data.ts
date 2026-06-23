@@ -62,3 +62,22 @@ export async function addLead(lead: Lead): Promise<void> {
   leads.unshift(lead);
   await writeDoc(DOC.leads, leads);
 }
+
+export async function updateLead(
+  id: string,
+  patch: Partial<Pick<Lead, "name" | "email" | "phone">>,
+): Promise<void> {
+  const leads = (await getLeads()) ?? [];
+  const idx = leads.findIndex((l) => l.id === id);
+  if (idx < 0) return;
+  leads[idx] = { ...leads[idx], ...patch };
+  await writeDoc(DOC.leads, leads);
+}
+
+export async function deleteLead(id: string): Promise<void> {
+  const leads = (await getLeads()) ?? [];
+  await writeDoc(
+    DOC.leads,
+    leads.filter((l) => l.id !== id),
+  );
+}
