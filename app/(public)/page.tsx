@@ -82,12 +82,12 @@ export default async function LandingPage() {
       <section id="about" className="py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 md:grid-cols-2">
           <div className="order-2 flex justify-center md:order-1">
-            <div className="relative h-72 w-72 overflow-hidden rounded-soft shadow-lg md:h-96 md:w-96">
+            <div className="relative h-60 w-60 overflow-hidden rounded-soft shadow-lg md:h-80 md:w-80">
               <Image
                 src="/author.jpg"
                 alt={c.about.name}
                 fill
-                sizes="(min-width: 768px) 384px, 288px"
+                sizes="(min-width: 768px) 320px, 240px"
                 className="object-cover"
               />
             </div>
