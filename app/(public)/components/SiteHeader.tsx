@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { glue } from "@/lib/typography";
 
 export default function SiteHeader() {
   return (
@@ -8,7 +9,7 @@ export default function SiteHeader() {
           Алина Салаватова<span className="text-terracotta">.</span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-mocha md:flex">
-          <a href="/#about" className="hover:text-terracotta">Об авторе</a>
+          <a href="/#about" className="hover:text-terracotta">{glue("Об авторе")}</a>
           <a href="/#contents" className="hover:text-terracotta">Программа</a>
           <Link href="/course" className="hover:text-terracotta">Курс</Link>
           <a href="/#faq" className="hover:text-terracotta">Вопросы</a>

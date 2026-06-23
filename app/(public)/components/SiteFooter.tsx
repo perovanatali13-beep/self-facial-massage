@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { SiteContent } from "@/lib/types";
+import { glue } from "@/lib/typography";
 
 export default function SiteFooter({ contacts }: { contacts: SiteContent["contacts"] }) {
   return (
@@ -10,7 +11,7 @@ export default function SiteFooter({ contacts }: { contacts: SiteContent["contac
             Алина Салаватова
           </p>
           <p className="mt-2 max-w-xs text-sm text-mocha">
-            Самомассаж лица — навык, который остаётся с вами на всю жизнь.
+            {glue("Самомассаж лица — навык, который остаётся с вами на всю жизнь.")}
           </p>
         </div>
         <div className="text-sm text-mocha">

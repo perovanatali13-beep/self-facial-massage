@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getContent } from "@/lib/data";
+import { glue, glueDeep } from "@/lib/typography";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import BuyForm from "./components/BuyForm";
@@ -8,7 +9,7 @@ import ReviewsCarousel from "./components/ReviewsCarousel";
 export const dynamic = "force-dynamic";
 
 export default async function LandingPage() {
-  const c = await getContent();
+  const c = glueDeep(await getContent());
 
   return (
     <>
@@ -77,7 +78,7 @@ export default async function LandingPage() {
           </div>
           <div className="order-1 md:order-2">
             <p className="text-sm font-medium uppercase tracking-wide text-terracotta">
-              Об авторе
+              {glue("Об авторе")}
             </p>
             <h2 className="mt-2 font-display text-3xl font-semibold text-espresso">
               {c.about.name}
@@ -245,7 +246,7 @@ export default async function LandingPage() {
           </div>
           <div className="rounded-soft bg-cream p-7 text-espresso shadow-xl">
             <p className="mb-4 font-display text-xl font-semibold">
-              Оставьте заявку на курс
+              {glue("Оставьте заявку на курс")}
             </p>
             <BuyForm ctaText={c.pricing.ctaText} />
           </div>

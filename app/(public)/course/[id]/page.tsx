@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getCourse, getContent } from "@/lib/data";
+import { glueDeep } from "@/lib/typography";
 import { hasCourseAccess } from "@/lib/auth";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
@@ -15,8 +16,8 @@ export default async function LessonPage({
 }) {
   const { id } = await params;
   if (!(await hasCourseAccess())) redirect("/course/access");
-  const course = await getCourse();
-  const content = await getContent();
+  const course = glueDeep(await getCourse());
+  const content = glueDeep(await getContent());
   const lesson = course.lessons.find((l) => l.id === id && l.published);
   if (!lesson) notFound();
 

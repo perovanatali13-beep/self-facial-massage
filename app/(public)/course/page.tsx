@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCourse, getContent } from "@/lib/data";
+import { glue, glueDeep } from "@/lib/typography";
 import { hasCourseAccess } from "@/lib/auth";
 import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
@@ -10,8 +11,8 @@ export const dynamic = "force-dynamic";
 
 export default async function CoursePage() {
   if (!(await hasCourseAccess())) redirect("/course/access");
-  const course = await getCourse();
-  const content = await getContent();
+  const course = glueDeep(await getCourse());
+  const content = glueDeep(await getContent());
   const lessons = course.lessons.filter((l) => l.published);
 
   return (
@@ -36,7 +37,7 @@ export default async function CoursePage() {
         <div className="mx-auto max-w-3xl px-5">
           <div className="rounded-soft border border-sand bg-white p-6">
             <h2 className="font-display text-lg font-semibold text-espresso">
-              Инструкция к курсу
+              {glue("Инструкция к курсу")}
             </h2>
             <p className="mt-2 text-mocha">{course.intro.instruction}</p>
           </div>
@@ -71,7 +72,7 @@ export default async function CoursePage() {
 
           <form action={courseLogout} className="pt-4 text-center">
             <button className="text-sm text-mocha hover:text-terracotta hover:underline">
-              Выйти из курса
+              {glue("Выйти из курса")}
             </button>
           </form>
         </div>
