@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Самомассаж лица — экспресс-курс Алины Салаватовой",
   description:
     "7-дневный экспресс-курс по самомассажу лица. Упругость, свежесть и тонус без салонов и мастеров.",
+  verification: {
+    google: "kmnXuzNiP3ry0lN-eQRtd1RqoEwjrOZn2MNtuGdUfIU",
+  },
 };
 
 // Yandex.Metrika counter (id 110096367)
