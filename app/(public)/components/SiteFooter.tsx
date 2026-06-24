@@ -49,7 +49,7 @@ export default function SiteFooter({ contacts }: { contacts: SiteContent["contac
         <div className="text-sm text-mocha">
           <p className="mb-3 font-medium text-espresso">Навигация</p>
           <Link href="/" className="block hover:text-terracotta">Главная</Link>
-          <Link href="/course" className="block hover:text-terracotta">Курс</Link>
+          <Link href="/course/access" className="block hover:text-terracotta">{glue("Вход по коду")}</Link>
         </div>
       </div>
       <div className="border-t border-sand py-5 text-center text-xs text-mocha">

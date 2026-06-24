@@ -11,7 +11,6 @@ export default function SiteHeader() {
         <nav className="hidden items-center gap-8 text-sm text-mocha md:flex">
           <a href="/#about" className="hover:text-terracotta">{glue("Об авторе")}</a>
           <a href="/#contents" className="hover:text-terracotta">Программа</a>
-          <Link href="/course" className="hover:text-terracotta">Курс</Link>
           <a href="/#faq" className="hover:text-terracotta">Вопросы</a>
         </nav>
         <a
