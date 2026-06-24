@@ -37,12 +37,12 @@ export default async function LandingPage() {
               >
                 {c.hero.ctaText}
               </a>
-              <Link
-                href="/course"
+              <a
+                href="#contents"
                 className="rounded-full border border-clay px-7 py-3 font-medium text-espresso transition hover:bg-sand"
               >
                 Посмотреть программу
-              </Link>
+              </a>
             </div>
           </div>
           <div className="relative flex justify-center">
