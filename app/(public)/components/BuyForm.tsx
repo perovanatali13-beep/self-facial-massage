@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function BuyForm({ ctaText }: { ctaText: string }) {
+export default function BuyForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
 
@@ -13,12 +13,18 @@ export default function BuyForm({ ctaText }: { ctaText: string }) {
     setStatus("loading");
     setMessage("");
     try {
-      const res = await fetch("/api/leads", {
+      const res = await fetch("/api/pay/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
       const data = await res.json().catch(() => ({}));
+      // Если оплата подключена — переходим на страницу оплаты.
+      if (res.ok && data.paymentUrl) {
+        window.location.href = data.paymentUrl;
+        return;
+      }
+      // Оплата ещё не настроена — заявка сохранена в «Заказы».
       if (res.ok && data.ok) {
         setStatus("done");
         return;
@@ -35,10 +41,10 @@ export default function BuyForm({ ctaText }: { ctaText: string }) {
     return (
       <div className="rounded-xl bg-sand/60 px-4 py-6 text-center">
         <p className="font-display text-lg font-semibold text-espresso">
-          Спасибо! Заявка принята.
+          Спасибо! Заявка на доступ принята.
         </p>
         <p className="mt-2 text-sm text-mocha">
-          Мы свяжемся с вами в ближайшее время по указанным контактам.
+          Мы свяжемся с вами и пришлём ссылку на оплату и доступ к курсу.
         </p>
       </div>
     );
@@ -73,7 +79,7 @@ export default function BuyForm({ ctaText }: { ctaText: string }) {
         disabled={status === "loading"}
         className="w-full rounded-full bg-terracotta px-6 py-3 font-medium text-white transition hover:bg-clay disabled:opacity-60"
       >
-        {status === "loading" ? "Отправляем…" : ctaText}
+        {status === "loading" ? "Отправляем…" : "Получить доступ"}
       </button>
       {status === "error" && (
         <p className="text-center text-sm text-red-500">{message}</p>

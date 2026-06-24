@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { getContent } from "@/lib/data";
 import { glueDeep } from "@/lib/typography";
 import { hasCourseAccess } from "@/lib/auth";
-import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import SkinTest from "./SkinTest";
 
@@ -15,8 +14,6 @@ export default async function SkinTestPage() {
 
   return (
     <>
-      <SiteHeader />
-
       <section className="bg-sand/40 py-12">
         <div className="mx-auto max-w-2xl px-5 text-center">
           <span className="inline-block rounded-full bg-white px-4 py-1 text-xs font-medium uppercase tracking-wide text-terracotta">

@@ -3,7 +3,6 @@ import { notFound, redirect } from "next/navigation";
 import { getCourse, getContent } from "@/lib/data";
 import { glueDeep } from "@/lib/typography";
 import { hasCourseAccess } from "@/lib/auth";
-import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import LessonVideo from "./LessonVideo";
 
@@ -28,8 +27,6 @@ export default async function LessonPage({
 
   return (
     <>
-      <SiteHeader />
-
       <article className="mx-auto max-w-3xl px-5 py-14">
         <Link href="/course" className="text-sm text-terracotta hover:underline">
           ← Все уроки

@@ -67,7 +67,9 @@ export async function markOrderPaid(orderId: string): Promise<string | null> {
   if (!order) return null;
   if (order.status === "paid" && order.access_code) return order.access_code;
 
-  const code = order.access_code || genCode();
+  // Общий код доступа (COURSE_PASSWORD) — его же студент видит в письме.
+  // Если он не задан, генерируем персональный код.
+  const code = order.access_code || process.env.COURSE_PASSWORD || genCode();
   const { error } = await getSupabase()
     .from("orders")
     .update({ status: "paid", access_code: code, paid_at: new Date().toISOString() })

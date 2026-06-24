@@ -9,13 +9,17 @@ export async function sendAccessEmail(to: string, code: string): Promise<void> {
   if (!key || !from || !to) return;
 
   const html = `
-    <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#3a302b">
-      <h2 style="color:#b5806b">Доступ к курсу самомассажа лица</h2>
-      <p>Спасибо за покупку! Ваш персональный код доступа:</p>
+    <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#42333a">
+      <h2 style="color:#ad757e">Доступ к курсу самомассажа лица</h2>
+      <p>Спасибо за покупку! Ваш код доступа к курсу:</p>
       <p style="font-size:22px;font-weight:bold;letter-spacing:2px">${code}</p>
-      <p>Откройте курс и введите код на странице доступа:</p>
-      <p><a href="${site}/course/access" style="color:#b5806b">${site}/course/access</a></p>
-      <p style="color:#6b5d54;font-size:13px">Код действует постоянно. Сохраните это письмо.</p>
+      <p>Ссылка на курс:</p>
+      <p><a href="${site}/course" style="color:#ad757e">${site}/course</a></p>
+      <p style="color:#705e65;font-size:14px">
+        Перейдите по ссылке и введите код доступа — после этого курс откроется и
+        будет доступен 30 дней без повторного ввода.
+      </p>
+      <p style="color:#705e65;font-size:13px">Сохраните это письмо. Чек об оплате придёт отдельным сообщением.</p>
     </div>`;
 
   try {

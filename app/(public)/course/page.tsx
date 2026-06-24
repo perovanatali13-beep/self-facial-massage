@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { getCourse, getContent } from "@/lib/data";
 import { glue, glueDeep } from "@/lib/typography";
 import { hasCourseAccess } from "@/lib/auth";
-import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
 import { courseLogout } from "./actions";
 
@@ -17,8 +16,6 @@ export default async function CoursePage() {
 
   return (
     <>
-      <SiteHeader />
-
       <section className="bg-sand/40 py-16">
         <div className="mx-auto max-w-4xl px-5 text-center">
           <span className="inline-block rounded-full bg-white px-4 py-1 text-xs font-medium uppercase tracking-wide text-terracotta">

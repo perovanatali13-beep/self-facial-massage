@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { paymentsConfigured, initPayment } from "@/lib/payments";
 import { createOrder, setOrderPaymentId } from "@/lib/orders";
-import { addLead } from "@/lib/data";
 
 export const runtime = "nodejs";
 
@@ -17,13 +16,6 @@ function siteUrl(req: Request): string {
 }
 
 export async function POST(req: Request) {
-  if (!paymentsConfigured()) {
-    return NextResponse.json(
-      { error: "Приём оплаты ещё не настроен. Попробуйте позже." },
-      { status: 503 }
-    );
-  }
-
   const { name, email, phone } = await req.json();
   if (!name || !email || !phone) {
     return NextResponse.json({ error: "Заполните все поля" }, { status: 400 });
@@ -33,15 +25,13 @@ export async function POST(req: Request) {
   const base = siteUrl(req);
 
   try {
+    // Заказ создаём всегда — он сразу виден в админке («Заказы»).
     await createOrder({ orderId, name, email, phone, amount: PRICE_KOPECKS });
-    // дублируем в заявки, чтобы заказ был виден в админке
-    await addLead({
-      id: orderId,
-      name: String(name),
-      email: String(email),
-      phone: String(phone),
-      createdAt: new Date().toISOString(),
-    });
+
+    // Если эквайринг ещё не подключён — просто сохраняем заявку без оплаты.
+    if (!paymentsConfigured()) {
+      return NextResponse.json({ ok: true, pending: true });
+    }
 
     const result = await initPayment({
       orderId,

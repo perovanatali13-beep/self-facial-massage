@@ -35,7 +35,7 @@ export default async function LandingPage() {
                 href="#pricing"
                 className="rounded-full bg-terracotta px-7 py-3 font-medium text-white transition hover:bg-clay"
               >
-                {c.hero.ctaText}
+                Получить доступ
               </a>
               <a
                 href="#contents"
@@ -268,7 +268,7 @@ export default async function LandingPage() {
             <p className="mb-4 font-display text-xl font-semibold">
               {glue("Оставьте заявку на курс")}
             </p>
-            <BuyForm ctaText={c.pricing.ctaText} />
+            <BuyForm />
           </div>
         </div>
       </section>
